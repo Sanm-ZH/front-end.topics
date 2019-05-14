@@ -221,7 +221,6 @@ class Clock extends React.Component {
 
 > - `类名`即为`组件名`（无论是函数定义组件还是类定义组件，组件名称的首字母都必须大写，并且继承自`React.Component`）
 > - 使用 `render()` 方法，用来返回需要呈现的内容
->   <br>
 
 - **在类中加入 state**
   state 是属于一个组件自身的。我们可以在类的构造函数 constructor 中来初始化状态，如：
@@ -243,9 +242,13 @@ class Clock extends React.Component {
   而相应的，生命周期钩子函数有：
 
   `componentWillMount`
+
   `componentDidMount`
+
   `componentWillUpdate(newProps, nextState)`
+
   `componentDidUpdate(prevProps, prevState)`
+  
   `componentWillUnmount()`
 
   此外，还有两种特殊状态的处理函数：
