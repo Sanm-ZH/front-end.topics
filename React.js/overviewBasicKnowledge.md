@@ -1,5 +1,5 @@
-## React.js 基础知识速览
-### 1、什么是JSX？
+# React.js 基础知识速览
+## 1、什么是JSX？
 一个JSX语法的示例，如下所示
 ```js
 const element = <h1>Hello, world!</h1>;
@@ -7,7 +7,7 @@ const element = <h1>Hello, world!</h1>;
 这种语法形式，既不是HTML，也不是字符串，而是称之为JSX，是React里用来描述UI和样式的语法，JSX最终会被编译为
 合法的JS语句调用（编译器在遇到`{`时采用`JS`语法进行解析，遇到`<`就采用`HTML`规则进行解析）
 
-### 2、嵌入表达式
+## 2、嵌入表达式
 JSX中，可以使用花括号`{}`嵌入任意的JavaScript合法表达式，如：`1 + 1`、`user.firstName`、`formatName(user)`都是合法的。
 
 如下示例：
@@ -31,7 +31,7 @@ ReactDOM.render(
 )
 ```
 
-### 3、JSX也是一种表达式
+## 3、JSX也是一种表达式
 JSX本身也是一种表达式，所以它可以像其他表达式一样，用于给一个变量赋值、作为函数实参、作为函数返回值，等等。如：
 ```js
 function getGreeting(user) {
@@ -55,7 +55,7 @@ function getGreeting(user) {
 - JSX本身已经做了防注入处理，对于那些不是明确编写的HTML代码，是不会被解析为HTML DOM的，ReactDOM会将他们一律视为字符串，在渲染完成前就转化为字符串，所以可以防止XSS攻击
 - 如果JSX标签是闭合的，那么结尾需要用`/>`，另外，JSX标签是可以互相嵌套的，这和HTML里是一样的
 
-### 4、JSX实质
+## 4、JSX实质
 JSX通过babel编译，而babel实际上把JSX编译给`React.createElement()`调用。如下JSX代码：
 ```js
 const element = (
@@ -83,3 +83,33 @@ const element = {
 }
 ```
 这样的对象，则称为`React元素`，代表所有呈现在屏幕上的东西。React正是通过读取这些对象来构建DOM，并且保持数据和UI同步的
+
+## 5、元素渲染
+元素（`elements`）是构成React应用的最小单元，元素描述了想要在屏幕中看到的内容，如：
+```js
+const element = <h1>Hello, world</h1>;
+```
+和DOM元素不同的是，React元素是纯对象，创建的代价低。并且React会进行优化处理，只把有必要的变化更新到DOM上。此外，元素和组件的概念，是不一样的，组件是由元素组成的。
+
+## 6、将元素渲染进DOM
+在React中，使用`ReactDOM.render()`方法来将React元素渲染进一个DOM中。如：
+```js
+ReactDOM.render(
+    element,
+    document.getElementById('root')
+)
+```
+React元素是不可变的，所以一旦一个元素创建完成后，我们是无法改变其内容或者属性的。一个元素就像是动画里的一帧，它代表UI在某一时间点的样子。如果非要使用元素来构成可变化的UI界面，就需要使用`setInterval`了，如：
+```js
+function tick() {
+    const element = (
+        <div>Now is {new Date().toLocaleTimeString()}</div>
+    );
+    ReactDOM.render(
+        element,
+        document.getElementById('root')
+    );
+}
+setInterval(tick, 1000);
+```
+在实际开发中，大多数React应用只会调用一次ReactDOM.render()，所以更好的方式是使用`有状态组件`
