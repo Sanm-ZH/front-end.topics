@@ -236,25 +236,21 @@ class Clock extends React.Component {
 - **生命周期**
   在应用里，往往都会有许许多多的组件。在组件销毁后，回收和释放它们所占据的资源非常重要。
   在时钟应用的例子里，我们需要在第一次渲染到 DOM 的时候设置一个定时器，并且需要在相应的 DOM 销毁后，清除这个定时器。那么，这种情况下，React 为我们提供了生命周期的钩子函数，方便我们进行使用。在 React 中，生命周期分为：
-  1）Mount 已插入真实 DOM
-  2）Update 正在重新渲染
-  3）Unmount 已移出真实 DOM
-  而相应的，生命周期钩子函数有：
-
-  `componentWillMount`
-
-  `componentDidMount`
-
-  `componentWillUpdate(newProps, nextState)`
-
-  `componentDidUpdate(prevProps, prevState)`
+  - Mount 已插入真实 DOM
+  - Update 正在重新渲染
+  - Unmount 已移出真实 DOM
   
-  `componentWillUnmount()`
+  而相应的，生命周期钩子函数有：
+  - `componentWillMount`
+  - `componentDidMount`
+  - `componentWillUpdate(newProps, nextState)`
+  - `componentDidUpdate(prevProps, prevState)`
+  - `componentWillUnmount()`
 
   此外，还有两种特殊状态的处理函数：
 
-  componentWillReceiveProps(nextProps) 已加载的组件收到新的参数时调动
-  shouldComponentUpdate(nextProps, nextState) 组件判断是否重新渲染时调用
+  `componentWillReceiveProps(nextProps)` 已加载的组件收到新的参数时调动
+  `shouldComponentUpdate(nextProps, nextState)` 组件判断是否重新渲染时调用
 
   因此，基于生命周期钩子函数，我们可以实现一个时钟应用如下：
 
@@ -287,8 +283,8 @@ class Clock extends React.Component {
 
   **需要注意的是：**
 
-  - render()里用不到的 state，不应该声明在 state 里
-  - 不能直接使用`this.state.xxx = xxx`的方式来改变一个 state 的值，应该使用`this.setState()`。如：
+  - `render()`里用不到的 `state`，不应该声明在 `state` 里
+  - 不能直接使用`this.state.xxx = xxx`的方式来改变一个 `state` 的值，应该使用`this.setState()`。如：
     ```js
     setName () {
         this.setState({
@@ -296,9 +292,9 @@ class Clock extends React.Component {
         })
     }
     ```
-    `this.setState()`会自动覆盖 this.state 里相应的属性，并触发 render()重新渲染。
-  - 状态更新可能是异步的
-    React 可以将多个 setState()调用合并成一个调用来提升性能。且由于 this.props 和 this.state 可能是异步更新的，所以不应该依靠它们的值来计算下一个状态。这种情况下，可以给 setState 传入一个函数，如：
+    `this.setState()`会自动覆盖 this.state 里相应的属性，并触发 `render()`重新渲染。
+  - **状态更新可能是异步的**
+    `React` 可以将多个 `setState()`调用合并成一个调用来提升性能。且由于 `this.props` 和 `this.state` 可能是异步更新的，所以不应该依靠它们的值来计算下一个状态。这种情况下，可以给 `setState` 传入一个函数，如：
     ```js
     this.setState((prevState, props) => ({
     	counter: prevState.counter + props.increment
