@@ -387,3 +387,101 @@ React 元素的事件与 DOM 元素类似，不过也有一些区别，如：
   <button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
   ```
   需要注意的是，使用箭头函数的情况下，参数 `e` 要显式传递，而使用 bind 的情况下，则无需显式传递（参数 `e` 会作为最后一个参数传递给事件处理程序）
+
+## 10、条件渲染
+
+在 React 里，我们可以创建不同的组件来封装我们需要的功能。我们也可以根据组件的状态，只渲染组件中的一部分内容，而条件渲染就是为此而准备的。在 React 中，我们可以像在 JavaScript 中写条件语句一样地写条件渲染语句，如：
+
+```js
+function Greet(props) {
+	const isLogined = props.isLogined
+	if (isLogined) {
+		return <div>Hello !</div>
+	}
+	return <div>Please sign in</div>
+}
+
+ReactDOM.render(<Greet isLogined={true} />, document.getElementById('root'))
+```
+
+这将渲染出：
+
+```html
+<div>Hello !</div>
+```
+
+- **使用变量来存储元素**
+  我们也可以使用变量来存储元素，如：
+
+  ```js
+  function LogBtn(props) {
+  	var button
+  	const isLogined = props.isLogined
+  	if (isLogined) {
+  		button = <button>退出</button>
+  	} else {
+  		button = <button>登陆</button>
+  	}
+  	return <div>You can {button}</div>
+  }
+
+  ReactDOM.render(<LogBtn isLogined={false} />, document.getElementById('root'))
+  ```
+
+- **使用&&运算符进行渲染**
+  由于 JavaScript 语法对待`&&`运算符的性质，我们也可以使用&&运算符来完成条件渲染，如：
+
+  ```js
+  function LogBtn(props) {
+  	var button
+  	const isLogined = props.isLogined
+  	return (
+  		<div>
+  			Hello
+  			{!isLogined && <button>请登陆</button>}
+  		</div>
+  	)
+  }
+  ```
+
+  当`props.isLogined`为`false`的时候，就会渲染出：
+
+  ```html
+  <div>Hello <button>请登录</button></div>
+  ```
+
+- **使用三目运算符进行渲染**
+  我们可能已经发现了，其实 JSX 可以像一个表达式那样子灵活使用，所以，我们自然也可以使用三目运算符进行渲染，如：
+
+  ```js
+  function LogBtn(props) {
+  	const isLogined = props.isLogined
+  	return (
+  		<div>
+  			You can
+  			<button>{isLogined ? '退出' : '登陆'}</button>
+  		</div>
+  	)
+  }
+  ```
+
+- **阻止整个组件的渲染**
+  有时候，我们希望是整个组件都不渲染，而不仅仅是局部不渲染，那么这种情况下，我们就可以在`render()`函数里返回一个`null`，来实现我们想要的效果，如：
+
+  ```js
+  function LogBtn(props) {
+  	const isLogined = props.isLogined
+  	const isShow = props.isShow
+  	if (isShow) {
+  		return (
+  			<div>
+  				You can
+  				<button>{isLogined ? '退出' : '登陆'}</button>
+  			</div>
+  		)
+  	}
+  	return null
+  }
+  ```
+
+  **注意：** 组件里返回`null`不会影响组件生命周期的触发，如`componentWillUpdate`和`componentDidUpdate`仍然会被调用
