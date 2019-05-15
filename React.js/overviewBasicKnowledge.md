@@ -485,3 +485,69 @@ ReactDOM.render(<Greet isLogined={true} />, document.getElementById('root'))
   ```
 
   **注意：** 组件里返回`null`不会影响组件生命周期的触发，如`componentWillUpdate`和`componentDidUpdate`仍然会被调用
+
+## 11、列表渲染与 keys
+
+在 JavaScript 中，我们可以使用`map()`函数来对一个数组列表进行操作，如：
+
+```js
+const numbers = [1, 2, 3, 4, 5]
+const doubled = numbers.map(number => number * 2)
+console.log(doubled) // 得到[2, 4, 6, 8, 10]
+```
+
+同样的，在 React 里，我们也可以使用`map()`来进行列表渲染，如：
+
+```js
+const numbers = [1, 2, 3, 4, 5]
+const listItems = numbers.map(number => {
+	return <li>{number}</li>
+})
+
+ReactDOM.render(<ul>{listItems}</ul>, document.getElementById('root'))
+```
+
+这将得到：
+
+```html
+<ul>
+	<li>1</li>
+	<li>2</li>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+</ul>
+```
+
+当然，我们还可以进行更好的封装，如：
+
+```js
+function NumberList(props) {
+	const numbers = props.numbers
+	const listItems = numbers.map(number => {
+		return <li>{number}</li>
+	})
+
+	return <ul>{listItems}</ul>
+}
+```
+
+当我们运行以上的代码的时候，会发现控制台提示：`Each child in an array or iterator should have a unique "key" prop`，因此，我们需要为列表项的每一个项分配一个`key`，来解决这个问题，通常而言，我们可以使用以下几种方式来提供`key`：
+
+- 使用数据项自身的 ID，如`<li key={item.itemId}>`
+- 使用索引下标（`index`），如：
+
+```js
+const listItems = numbers.map((number, index) => {
+	;<li key={index}>{number}</li>
+})
+```
+
+但是 React 不推荐在需要重新排序的列表里使用索引下标，因为会导致变得很慢。
+**注意：** 只有在一个项的同胞里区分彼此的时候，才需要使用到 key，key 不需要全局唯一，只需要在一个数组内部区分彼此时唯一便可。key 的作用是给 React 一个提示，而不会传递给组件。如果我们在组件内需要同样的一个值，可以换个名字传递，如：
+
+```js
+const content = posts.map(post => (
+	<Post key={post.id} id={post.id} title={post.title} />
+))
+```
