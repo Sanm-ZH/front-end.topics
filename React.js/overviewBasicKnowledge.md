@@ -150,7 +150,8 @@ setInterval(tick, 1000)
 
 - **组合组件**
   组件是可以组合的。即组件内部可以引用其他组件，如：
-  ```js
+
+  ````js
   function Welcome (props) {
   return <h1>Hello, {props.name}</h1>;
   }
@@ -182,6 +183,8 @@ setInterval(tick, 1000)
       ```
 
   <br>
+
+  ````
 
 - **属性是只读的**
   考虑以下这种情况：
@@ -236,11 +239,13 @@ class Clock extends React.Component {
 - **生命周期**
   在应用里，往往都会有许许多多的组件。在组件销毁后，回收和释放它们所占据的资源非常重要。
   在时钟应用的例子里，我们需要在第一次渲染到 DOM 的时候设置一个定时器，并且需要在相应的 DOM 销毁后，清除这个定时器。那么，这种情况下，React 为我们提供了生命周期的钩子函数，方便我们进行使用。在 React 中，生命周期分为：
+
   - Mount 已插入真实 DOM
   - Update 正在重新渲染
   - Unmount 已移出真实 DOM
-  
+
   而相应的，生命周期钩子函数有：
+
   - `componentWillMount`
   - `componentDidMount`
   - `componentWillUpdate(newProps, nextState)`
@@ -295,8 +300,90 @@ class Clock extends React.Component {
     `this.setState()`会自动覆盖 this.state 里相应的属性，并触发 `render()`重新渲染。
   - **状态更新可能是异步的**
     `React` 可以将多个 `setState()`调用合并成一个调用来提升性能。且由于 `this.props` 和 `this.state` 可能是异步更新的，所以不应该依靠它们的值来计算下一个状态。这种情况下，可以给 `setState` 传入一个函数，如：
-    ```js
-    this.setState((prevState, props) => ({
-    	counter: prevState.counter + props.increment
-    }))
-    ```
+    `js this.setState((prevState, props) => ({ counter: prevState.counter + props.increment }))`
+
+## 9、事件处理
+
+React 元素的事件与 DOM 元素类似，不过也有一些区别，如：
+
+- React 事件使用 `camelCase` 命名（`onClick`），而不是全小写的形式（`onclick`）
+- 使用 JSX，传入的是事件的句柄，而不是一个字符串
+  如以下的 HTML：
+
+  ```html
+  <button onclick="increment()">ADD</button>
+  ```
+
+  使用 React 的方式描述如：
+
+  ```html
+  <button onClick="{increment}">ADD</button>
+  ```
+
+  还有一个不同在于，在原生 DOM 中，我们可以通过返回 `false` 来阻止默认行为，但是这在 React 中是行不通的，在 React 中需要明确使用 `preventDefault()`来阻止默认行为。如：
+
+  ```js
+  function ActionLink() {
+  	function handleClick(e) {
+  		e.preventDefault()
+  		alert('Hello, world!')
+  	}
+
+  	return (
+  		<a href="#" onClick={handleClick}>
+  			Click Me
+  		</a>
+  	)
+  }
+  ```
+
+  这里，事件回调函数里的 `event` 是经过 React 特殊处理过的（遵循 W3C 标准），所以我们可以放心地使用它，而不用担心跨浏览器的兼容性问题。
+
+  **注意：** 在使用事件回调函数的时候，我们需要特别注意 `this` 的指向问题，因为在 React 里，**除了构造函数和生命周期钩子函数里会自动绑定 `this` 为当前组件外，其他的都不会自动绑定 `this` 的指向为当前组件**，因此需要我们自己注意好 `this` 的绑定问题，
+  通常而言，在一个类方式声明的组件里使用事件回调，我们需**要在组件的 `constructor` 里绑定回调方法的 `this` 指向**，如：
+
+  ```js
+  class Counter extends React.Component {
+  	constructor(props) {
+  		super(props)
+  		this.state = {
+  			counter: 0
+  		}
+  		// 在这里绑定指向
+  		this.increment = this.increment.bind(this)
+  	}
+  	increment() {
+  		this.setState({
+  			counter: this.state.counter + 1
+  		})
+  	}
+  	render() {
+  		return (
+  			<div>
+  				The counter now is: {this.state.counter}
+  				<button onClick={this.increment}>+1</button>
+  			</div>
+  		)
+  	}
+  }
+  ```
+
+  当然，我们还有另外一种方法来使用**箭头函数**绑定指向，就是使用`实验性`的属性初始化语法，如：
+
+  ```js
+  class Counter extends React.Component {
+    increment: () => {
+        this.setState({
+            counter: this.state.counter + 1
+        });
+    }
+    // ...
+  }
+  ```
+
+- 像事件处理程序传递参数我们可以为事件处理程序传递额外的参数，方式有以下两种：
+  ```html
+  <button onClick={(e) => this.deleteRow(id, e)}>Delete Row</button>
+  <button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
+  ```
+  需要注意的是，使用箭头函数的情况下，参数 `e` 要显式传递，而使用 bind 的情况下，则无需显式传递（参数 `e` 会作为最后一个参数传递给事件处理程序）
