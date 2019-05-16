@@ -551,3 +551,171 @@ const content = posts.map(post => (
 	<Post key={post.id} id={post.id} title={post.title} />
 ))
 ```
+
+## 12、表单
+
+表单和其他的 React 中的 DOM 元素有所不同，因为表单元素生来就是为了保存一些内部状态。在 React 中，表单和 HTML 中的表单略有不同
+
+- **受控组件**
+  HTML 中，`<input>`、`<textarea>`、`<select>`这类表单元素会维持自身状态，并根据用户输入进行更新。不过 React 中，可变的状态通常保存在组件的`this.state`中，且只能用`setState()`方法进行更新，如：
+
+  ```js
+  class NameForm extends React.Component {
+  	constructor(props) {
+  		super(props)
+  		this.state = {
+  			value: ''
+  		}
+  		this.handleChange = this.handleChange.bind(this)
+  		this.handleSubmit = this.handleSubmit.bind(this)
+  	}
+  	handleChange(event) {
+  		this.setState({
+  			value: event.target.value
+  		})
+  	}
+  	handleSubmit(event) {
+  		alert('Your name is ' + this.state.value)
+  		event.preventDefault()
+  	}
+  	render() {
+  		return (
+  			<form onSubmit={this.handleSubmit}>
+  				Name:{' '}
+  				<input
+  					type="text"
+  					value={this.state.value}
+  					onChange={this.handleChange}
+  				/>
+  				<input type="submit" value="Submit" />
+  			</form>
+  		)
+  	}
+  }
+  ```
+
+  和 HTML 中不同的是，React 中的`textarea`并不需要写成`<textarea></textarea>`的形式，而是写成`<textarea value="" ... />`的形式便可。而对于 HTML 中的`select`标签，通常做法是：
+
+  ```html
+  <select>
+  	<option value="A">A</option>
+  	<option value="B" selected>B</option>
+  	<option value="C">C</option>
+  </select>
+  ```
+
+  但是 React 中，不需要在需要选中的`option`处加入`selected`，而只需要传入一个 value，就会自动根据 value 来选中相应的选项，如：
+
+  ```html
+  <select value="C">
+  	<option value="A">A</option>
+  	<option value="B">B</option>
+  	<option value="C">C</option>
+  </select>
+  ```
+
+  那么如上述例子，C 所在的这个`option`就会被选中
+
+- **多个输入的解决办法**
+  通常一个表单都有多个输入，如果我们为每一个输入添加处理事件，那么将会非常繁琐。好的一个解决办法是，使用`name`，然后根据`event.target.name`来选择做什么。如：
+
+  ```js
+  class Form extends React.Component {
+  	constructor(props) {
+  		super(props)
+  		this.state = {
+  			name: '',
+  			gender: '男',
+  			attend: false,
+  			profile: ''
+  		}
+  		this.handleInputChange = this.handleInputChange.bind(this)
+  		this.handleSubmit = this.handleSubmit.bind(this)
+  	}
+  	handleInputChange(event) {
+  		const target = event.target
+  		const value = target.type === 'checkbox' ? target.checked : target.value
+  		const name = target.name
+  		this.setState({
+  			[name]: value
+  		})
+  	}
+  	handleSubmit(event) {
+  		this.setState({
+  			profile: `姓名：${this.state.name}，${this.state.gender}，${
+  				this.state.attend ? '参加' : '不参加'
+  			}活动`
+  		})
+  		event.preventDefault()
+  	}
+  	render() {
+  		return (
+  			<form>
+  				<p>
+  					姓名：
+  					<input
+  						name="name"
+  						value={this.state.name}
+  						onChange={this.handleInputChange}
+  					/>
+  				</p>
+  				<p>
+  					性别：
+  					<select
+  						name="gender"
+  						value={this.state.gender}
+  						onChange={this.handleInputChange}
+  					>
+  						<option value="男">男</option>
+  						<option value="女">女</option>
+  					</select>
+  				</p>
+  				<p>
+  					是否参加：
+  					<input
+  						name="attend"
+  						type="checkbox"
+  						onChange={this.handleInputChange}
+  						checked={this.state.attend}
+  					/>
+  				</p>
+  				<input type="submit" value="Submit" onClick={this.handleSubmit} />
+  				<p>您的报名信息：{this.state.profile}</p>
+  			</form>
+  		)
+  	}
+  }
+  ```
+
+- **非受控组件**
+  大多数情况下，使用`受控组件`实现表单是首选，在受控组件中，表单数据是交由 React 组件处理的。如果想要让表单数据由 DOM 处理（即数据不保存在 React 的状态里，而是保存在 DOM 中），那么可以使用`非受控组件`，使用`非受控组件`，可以无需为每个状态更新编写事件处理程序，使用`ref`即可实现，如：
+
+  ```js
+  class NameForm extends React.Component {
+  	constrcutor(props) {
+  		super(props)
+  	}
+  	handleSubmit(event) {
+  		console.log('A name was submitted: ', this.input.value)
+  		event.preventDefault()
+  	}
+  	render() {
+  		return (
+  			<form onSubmit={this.handleSubmit}>
+  				<label>
+  					Name: <input type="text" ref={input => (this.input = input)} />
+  				</label>
+  				<input type="submit" value="submit" />
+  			</form>
+  		)
+  	}
+  }
+  ```
+
+  对于`非受控组件`，如果要指定默认值，那么可以使用`defaultValue`，如：
+
+  ```html
+  <input type="text" defaultValue="Hello" ref={input => this.input = input} />
+  ```
+
+  相应的，`type="checkbox"`和`type="radio"`，则使用`defaultChecked`
