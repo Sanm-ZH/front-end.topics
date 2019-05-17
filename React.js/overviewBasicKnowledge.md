@@ -719,3 +719,159 @@ const content = posts.map(post => (
   ```
 
   相应的，`type="checkbox"`和`type="radio"`，则使用`defaultChecked`
+
+## 13、状态提升
+
+当需要几个组件共用状态数据的时候，可以使用状态提升技术。核心思想在于：把数据抽离到最近的共同父组件，父组件管理状态（state），然后通过属性（props）传递给子组件。如实现一个货币转换的组件，可以如下：
+
+- **首先定义转换函数**
+
+  ```js
+  function USD2RMB(amount) {
+  	return amount * 6.7925
+  }
+
+  function RMB2USD(amount) {
+  	return amount * 0.1472
+  }
+
+  function convert(amount, typeFn) {
+  	return typeFn(amount)
+  }
+  ```
+
+- **定义组件**
+  我们希望在 RMB 的输入表单上上输入的时候，USD 的输入表单上的数值也同步更新，这种情况下，如果 RMB 组件自己管理自己的状态，是很难以实现的，因此，我们需要让这个状态提升自父组件进行管理。如下：
+
+  ```js
+  class CurrencyInput extends React.Component {
+  	constructor(props) {
+  		super(props)
+  		this.handleChange = this.handleChange.bind(this)
+  	}
+  	handleChange(event) {
+  		this.props.onInputChange(event.target.value)
+  	}
+  	render() {
+  		const value = this.props.value
+  		const type = this.props.type
+  		return (
+  			<p>
+  				{type}:{' '}
+  				<input type="text" value={value} onChange={this.handleChange} />
+  			</p>
+  		)
+  	}
+  }
+  ```
+
+  最后定义一个共同的父组件，如下：
+
+  ```js
+  class CurrencyConvert extends Component {
+  	constructor(props) {
+  		super(props)
+  		this.state = {
+  			type: 'RMB',
+  			amount: 0
+  		}
+  		this.handleRMBChange = this.handleRMBChange.bind(this)
+  		this.handleUSDChange = this.handleUSDChange.bind(this)
+  	}
+  	handleRMBChange(amount) {
+  		this.setState({
+  			type: 'RMB',
+  			amount
+  		})
+  	}
+  	handleUSDChange(amount) {
+  		this.setState({
+  			type: 'USD',
+  			amount
+  		})
+  	}
+  	render() {
+  		const type = this.state.type
+  		const amount = this.state.amount
+  		const RMB = type === 'RMB' ? amount : convert(amount, USB2RMB)
+  		const USD = type === 'USD' ? amount : convert(amount, RMB2USB)
+  		return (
+  			<div>
+  				<p>Please Input:</p>
+  				<CurrencyInput
+  					type="RMB"
+  					value={RMB}
+  					onInputChange={this.handleRMBChange}
+  				/>
+  				<CurrencyInput
+  					type="USD"
+  					value={USD}
+  					onInputChange={this.handleUSDChange}
+  				/>
+  			</div>
+  		)
+  	}
+  }
+  ```
+
+## 14、组合 vs 继承
+
+React 推崇更多的是使用组合，而非使用继承。对于一些使用场景，React 给出的建议如下：
+
+- **包含关系**
+  当父组件不知道子组件可能的内容是什么的时候，可以使用`props.children`，如：
+
+  ```js
+  function Article(props) {
+  	return (
+  		<section>
+  			<aside>侧边栏</aside>
+  			<article>{props.children}</article>
+  		</section>
+  	)
+  }
+
+  function App() {
+  	return <Article>这是一篇文章</Article>
+  }
+  ```
+
+  这将渲染得到：
+
+  ```html
+  <section>
+  	<aside>侧边栏</aside>
+  	<article>这是一篇文章</article>
+  </section>
+  ```
+
+  我们还可以自定义名称，因为 JSX 实际上会被转化为合法的 JS 表达式，所以，还可以有：
+
+  ```js
+  function Article(props) {
+  	return (
+  		<section>
+  			<aside>{props.aside}</aside>
+  			<article>{props.children}</article>
+  		</section>
+  	)
+  }
+
+  function App() {
+  	return <Article aside={<h1>这是一个侧栏</h1>}>这是一篇文章</Article>
+  }
+  ```
+
+  这将渲染得到：
+
+  ```html
+  <section>
+  	<aside><h1>这是一个侧栏</h1></aside>
+  	<article>这是一篇文章</article>
+  </section>
+  ```
+
+- **何时使用继承？**
+  在 Facebook 的网站上，使用了数以千计的组件，但是实践证明还没有发现需要使用继承才能解决的情况。
+  属性和组合为我们提供了清晰的、安全的方式来自定义组件的样式和行为，组件可以接受任意元素，包括：基本数据类型、React 元素、函数。
+  如果要在组件之间复用 UI 无关的功能，那么应该将其提取到单独的 JavaScript 模块中，这样子可以在不对组件进行扩展的前提下导入并使用函数、对象、类
