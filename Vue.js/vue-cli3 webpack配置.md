@@ -1,5 +1,5 @@
 ### webpack配置
-#### 配置详解
+#### 配置详情
 ```js
 'use strict'
 const path = require('path')
