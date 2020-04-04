@@ -138,3 +138,114 @@
    console.log(a) // 语法错误
    let a = 123
    ```
+
+#### 箭头函数
+
+在使用箭头函数时需要注意：
+
+- 如果只有一个参数，可以省略括号`()`
+- 如果只有一个`return`，可以省略花括号`{}`
+  **注意**：箭头函数与包围它的代码共享同一个`this`，能帮你很好的解决`this`的指向问题
+
+> 普通函数和箭头函数的区别
+
+```js
+// 普通函数1
+function show(){}
+
+// 箭头函数1
+let show()=>{}
+
+// 普通函数2
+function(){}
+
+// 箭头函数2
+()=>{}
+```
+
+#### 解构赋值
+
+从数组和对象中提取值，对变量进行赋值，这被称为解构，解构赋值可以直接使用对象的某个属性，而不需要通过属性访问的形式使用
+
+> 普通赋值和解构
+
+```js
+// 普通赋值
+let arr = [1, 2, 3]
+let a = arr[0]
+let b = arr[1]
+let c = arr[2]
+console.log(a, b, c) // 1,2,3
+
+//获取数组中的值
+let [a, b, c] = [1, 2, 3]
+console.log(a, b, c) //1,2,3
+
+//获取数组中的值
+let [a, b] = [123, 23]
+console.log(a, b) //123 23
+
+//获取对象中的值
+let { a, c, d } = { a: 12, c: 5, d: 6 }
+console.log(a, c, d)
+
+//复杂解构
+let [{ a, b }, [n1, n2, n3], num, str] = [
+	{ a: 12, b: 4 },
+	[2, 3, 6],
+	787,
+	'abcdes'
+]
+console.log(a, b, n1, n2, n3, num, str)
+
+//复杂解构
+let [json, arr, num, str] = [{ a: 12, b: 4 }, [2, 3, 6], 787, 'abcdes']
+console.log(json, arr, num, str)
+```
+
+#### 默认参数
+
+```js
+$('#div1').animate({ width: '200px' })
+$('#div1').animate({ width: '200px' }, 1000)
+
+function show(a, b = 5, c = 12) {
+	console.log(a, b, c)
+}
+show(99) //99 5 12(默认参数就是直接把值替换成没有定义值的)
+```
+
+#### 扩展运算符
+
+- 收集剩余的参数
+  ```js
+  function show(a, b, ...args) {
+  	alert(args)
+  }
+  show(12, 12, 34, 3, 2, 4, 28) //打印出来的结果是34,3,2,4,28   (...args必须放在最后面)
+  ```
+- 展开数组
+
+  ```js
+  //普通函数
+  function show(a, b, c) {
+  	alert(a)
+  	alert(b)
+  	alert(c)
+  }
+  show(1, 2, 3) //打印出来的结果弹出1,再弹出2，再弹出3
+
+  //数组展开
+  let arr1 = [1, 2, 3]
+  let arr2 = [5, 6, 7]
+  let arr = [...arr1, ...arr2]
+  alert(arr)
+
+  function show(...args) {
+  	fn(...args)
+  }
+  function fn(a, b) {
+  	alert(a + b)
+  }
+  show(12, 5) //弹出17
+  ```
