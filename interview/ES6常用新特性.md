@@ -249,3 +249,83 @@ show(99) //99 5 12(默认参数就是直接把值替换成没有定义值的)
   }
   show(12, 5) //弹出17
   ```
+
+#### 数组
+
+- map
+
+  ```js
+  //例子1
+  [45,78,278,890]
+  [
+    {name:'one',level:0,role:9},
+    {name:'two',level:0,role:8},
+    {name:'three',level:0,role:7},
+    {name:'four',level:0,role:6},
+  ]
+
+  //例子 2
+  let arr=[12,5,8];
+  let result = arr.map((item)=>{
+  return item\*2;
+  })
+  alert(result)//24,10,16
+
+  //例子 3
+  let arr=[12,5,8];
+  let result = arr.map(item=>item\*2);
+  alert(result)//24,10,16
+  ```
+
+- reduce
+
+  ```js
+  //例子1,算平均数
+  let score = [89, 12, 34, 23, 45, 55]
+  let result = score.reduce(function(tmp, item, index) {
+  	return tmp + item
+  })
+  alert(result / score.length) //43(把这几个数求平均数)
+
+  //例子2
+  let arr = [12, 67, 67, 889, 97]
+  let result = arr.reduce(function(tmp, item, index) {
+  	if (index != this.length - 1) {
+  		//不是最后一次
+  		return tmp + item
+  	} else {
+  		//最后一次
+  		return tmp + item
+  	}
+  })
+  alert(result) //1132
+  ```
+
+- filter
+
+  ```js
+  //例子1
+  let arr = [12, 5, 8, 99, 67, 87]
+  let result = arr.filter(item => {
+  	if (item % 3 == 0) {
+  		return true
+  	} else {
+  		return false
+  	}
+  })
+  alert(result) //12,99,87
+
+  //例子2
+  let arr = [12, 5, 8, 99, 67, 87]
+  let result = arr.filter(item => {
+  	alert(item % 3 == 0)
+  }) //弹出布尔值
+  ```
+- forEach
+  ```js
+  let arr=[12,3,45,6,566];
+  arr.forEach((item,index)=>{
+      alert(index+':'+item)//0:12  1:3  2:45  3:6  4:566
+  }
+  ```
+#### 字符串
