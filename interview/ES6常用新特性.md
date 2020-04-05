@@ -194,7 +194,7 @@ let [{ a, b }, [n1, n2, n3], num, str] = [
 	{ a: 12, b: 4 },
 	[2, 3, 6],
 	787,
-	'abcdes'
+	'abcdes',
 ]
 console.log(a, b, n1, n2, n3, num, str)
 
@@ -282,14 +282,14 @@ show(99) //99 5 12(默认参数就是直接把值替换成没有定义值的)
   ```js
   //例子1,算平均数
   let score = [89, 12, 34, 23, 45, 55]
-  let result = score.reduce(function(tmp, item, index) {
+  let result = score.reduce(function (tmp, item, index) {
   	return tmp + item
   })
   alert(result / score.length) //43(把这几个数求平均数)
 
   //例子2
   let arr = [12, 67, 67, 889, 97]
-  let result = arr.reduce(function(tmp, item, index) {
+  let result = arr.reduce(function (tmp, item, index) {
   	if (index != this.length - 1) {
   		//不是最后一次
   		return tmp + item
@@ -306,7 +306,7 @@ show(99) //99 5 12(默认参数就是直接把值替换成没有定义值的)
   ```js
   //例子1
   let arr = [12, 5, 8, 99, 67, 87]
-  let result = arr.filter(item => {
+  let result = arr.filter((item) => {
   	if (item % 3 == 0) {
   		return true
   	} else {
@@ -317,10 +317,11 @@ show(99) //99 5 12(默认参数就是直接把值替换成没有定义值的)
 
   //例子2
   let arr = [12, 5, 8, 99, 67, 87]
-  let result = arr.filter(item => {
+  let result = arr.filter((item) => {
   	alert(item % 3 == 0)
   }) //弹出布尔值
   ```
+
 - forEach
   ```js
   let arr=[12,3,45,6,566];
@@ -328,4 +329,131 @@ show(99) //99 5 12(默认参数就是直接把值替换成没有定义值的)
       alert(index+':'+item)//0:12  1:3  2:45  3:6  4:566
   }
   ```
+
 #### 字符串
+
+##### 模板字符串
+
+需要拼接字符串的时候尽量改成使用模板字符串，模板字符串可以使字符串的拼接更加的简洁和直观
+
+```js
+const text = '疾病远离我'
+// 不使用
+let str1 = '每天一个' + 'helloworld ' + text + '!'
+let str2 = `每天一个helloworld ${text}!`
+```
+
+##### startsWith
+
+```js
+let str = 'git://www.github.com'
+if (str.startsWith('http://')) {
+	alert('普通地址')
+} else if (str.startsWith('https://')) {
+	alert('加密地址')
+} else if (str.startsWith('git://')) {
+	alert('git地址')
+} else {
+	alert('其它')
+} //git地址
+```
+
+##### endsWith
+
+```js
+let str = '1.jpg'
+if (str.endsWith('.txt')) {
+	alert('文件文本')
+} else if (str.endsWith('.jpg')) {
+	alert('JPG图片')
+} else {
+	alert('其它')
+} //JPG图片
+```
+
+#### promise
+
+##### 异步编程
+
+- 从服务器获取数据，这个过程就叫做异步编程
+- 在 node.js 中去读取文件，这个过程也是异步的
+
+##### promise 的理解
+
+Promise 本意是承诺，在程序中的意思就是承诺我过一段时间后会给你一个结果：
+
+什么时候会用到过一段时间？
+
+是异步操作
+
+异步是指可能比较长时间才有结果的才做，例如网络请求、读取本地文件等
+
+```js
+new Promise((resolve, reject) => {
+	setTimeout(() => {
+		resolve(1)
+	})
+}).then(
+	(value) => {
+		console.log('value', value)
+	},
+	(reason) => {
+		console.log('reason', reason)
+	}
+)
+```
+
+**PS**:当原生`promise`的参数不是函数时会报错`Promise resolver xxxx is not a function`
+
+具体可以看这篇[一步步教你实现 Promise/A+ 规范 完整版](https://juejin.im/post/5e2168626fb9a0300d619c9e)文章
+
+#### generator
+
+##### generator 生成器函数
+
+迭代器函数名前用`*`
+
+```js
+//generator生成器函数
+function* show2() {
+	console.log('1')
+	yield
+	console.log('2')
+}
+let genObj = show2()
+genObj.next() // 1
+genObj.next() // 2
+genObj.next() // 最后了，没有结果
+```
+
+##### yield
+
+迭代器遇到`yield`暂时中止执行，调用迭代器`next`方法继续执行
+
+- yield 可以传参
+  ```js
+  //yield可以传参
+  function* show() {
+  	alert('a') //a
+  	let a = yield
+  	alert('b') //b
+  	alert(a) //5
+  }
+  let gen = show()
+  gen.next(12)
+  gen.next(5)
+  ```
+- yield 可以返回
+  ```js
+  //yield返回
+  function* show() {
+  	alert('a')
+  	yield 12
+  	alert('b')
+  	return 55
+  }
+  let gen = show()
+  let res1 = gen.next()
+  console.log(res1) //{value:12,done:false}
+  let res2 = gen.next()
+  ```
