@@ -353,8 +353,6 @@ function randomSort(array) {
   return array;
 }
 ```
-
-
 [《Fisher and Yates 的原始版》](https://gaohaoyang.github.io/2016/10/16/shuffle-algorithm/#top)
 [《javascript 实现数组随机排序?》](https://www.zhihu.com/question/32303195)
 [《JavaScript 学习笔记：数组随机排序》](https://www.w3cplus.com/javascript/how-to-randomize-shuffle-a-javascript-array.html)
@@ -411,8 +409,6 @@ Student.prototype.sayMyGrade = function() {
 > 当我们查找一个变量时，如果当前执行环境中没有找到，我们可以沿着作用域链向后查找。<br>
 > 作用域链的创建过程跟执行上下文的建立有关....
 
-
-
 [《JavaScript 深入理解之作用域链》](http://cavszhouyou.top/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE.html)
 
 #### 谈谈 This 对象的理解
@@ -430,18 +426,13 @@ Student.prototype.sayMyGrade = function() {
 > 它的功能是把对应的字符串解析成 JS 代码并运行。<br>
 > 应该避免使用 eval，不安全，非常耗性能（2次，一次解析成 js 语句，一次执行）。
 
-
 [《eval()》](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/eval)
 
 #### 什么是 DOM 和 BOM？
-> DOM 指的是文档对象模型，它指的是把文档当做一个对象来对待，这个对象主要定义了处理网页内容的方法和接口。<br>
-> BOM 指的是浏览器对象模型，它指的是把浏览器当做一个对象来对待，这个对象主要定义了与浏览器进行交互的法和接口。BOM的核心是 window，而 window 对象具有双重角色，它既是通过 js 访问浏览器窗口的一个接口，又是一个 Global（全局）对象。这意味着在网页中定义的任何对象，变量和函数，都作为全局对象的一个属性或者方法存在。window 对象含有 location 对象、navigator 对象、screen 对象等子对象，并且 DOM 的最根本的对象 document 对象也是 BOM 的 window 对象的子对象。
-
+> **DOM** 指的是文档对象模型，它指的是把文档当做一个对象来对待，这个对象主要定义了处理网页内容的方法和接口。<br>
+> **BOM** 指的是浏览器对象模型，它指的是把浏览器当做一个对象来对待，这个对象主要定义了与浏览器进行交互的法和接口。**BOM**的核心是 **window**，而 **window** 对象具有双重角色，它既是通过 js 访问浏览器窗口的一个接口，又是一个 Global（全局）对象。这意味着在网页中定义的任何对象，变量和函数，都作为全局对象的一个属性或者方法存在。**window** 对象含有 location 对象、navigator 对象、screen 对象等子对象，并且 **DOM** 的最根本的对象 document 对象也是 **BOM** 的 **window** 对象的子对象。
 
 [《DOM, DOCUMENT, BOM, WINDOW 有什么区别?》](https://www.zhihu.com/question/33453164)
-
 [《Window 对象》](http://www.w3school.com.cn/jsref/dom_obj_window.asp)
-
 [《DOM 与 BOM 分别是什么，有何关联？》](https://www.zhihu.com/question/20724662)
-
 [《JavaScript 学习总结（三）BOM 和 DOM 详解》](https://segmentfault.com/a/1190000000654274#articleHeader21)
