@@ -22,8 +22,6 @@
 > 复杂数据类型指的是 Object 类型，所有其他的如 Array、Date 等数据类型都可以理解为 Object 类型的子类。<br>
 > 两种类型间的主要区别是它们的存储位置不同，基本数据类型的值直接保存在栈中，而复杂数据类型的值保存在堆中，通过使用在栈中保存对应的指针来获取堆中的值。
 
-详细资料可以参考：
-
 - [《JavaScript 有几种类型的值？》](https://blog.csdn.net/lxcao/article/details/52749421)
 - [《JavaScript 有几种类型的值？能否画一下它们的内存图》](https://blog.csdn.net/jiangjuanjaun/article/details/80327342)
 
@@ -35,7 +33,7 @@
 > 栈区内存由编译器自动分配释放，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。<br>
 > 堆区内存一般由程序员分配释放，若程序员不释放，程序结束时可能由垃圾回收机制回收。
 
-详细资料可以参考：
+
 [《什么是堆？什么是栈？他们之间有什么区别和联系？》](https://www.zhihu.com/question/19729973)
 
 #### 内部属性 [[Class]] 是什么？
@@ -88,7 +86,7 @@
 
 > js 中的内置对象主要指的是在程序执行前存在全局作用域里的由 js 定义的一些全局值属性、函数和用来实例化其他对象的构造函数对象。一般我们经常用到的如全局变量值 `NaN、undefined`，全局函数如 `parseInt()、parseFloat()` 用来实例化对象的构造函数如 `Date、Object` 等，还有提供数学计算的单体内置对象如 `Math` 对象。
 
-详细资料可以参考：
+
 [《标准内置对象的分类》](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects)
 [《JS 所有内置对象属性和方法汇总》](https://segmentfault.com/a/1190000011467723#articleHeader24)
 
@@ -104,7 +102,7 @@
 > `undefined` 在 js 中不是一个保留字，这意味着我们可以使用 `undefined` 来作为一个变量名，这样的做法是非常危险的，它会影响我们对 `undefined` 值的判断。但是我们可以通过一些方法获得安全的 `undefined` 值，比如说 `void 0`。<br>
 > 当我们对两种类型使用 `typeof` 进行判断的时候，`Null` 类型化会返回 “object”，这是一个历史遗留的问题。当我们使用双等号对两种类型的值进行比较时会返回 `true`，使用三个等号时会返回 `false`。
 
-详细资料可以参考：
+
 [《JavaScript 深入理解之 undefined 与 null》](http://cavszhouyou.top/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8Bundefined%E4%B8%8Enull.html)
 
 #### 如何获取安全的 undefined 值？
@@ -131,7 +129,7 @@
 > 特点：<br>
 > `JavaScript` 对象是通过引用来传递的，我们创建的每个新对象实体中并没有一份属于自己的原型副本。当我们修改原型时，与之相关的对象也会继承这一改变。
 
-详细资料可以参考：
+
 [《JavaScript 深入理解之原型与原型链》](http://cavszhouyou.top/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE.html)
 
 #### js 获取原型的方法
@@ -250,7 +248,6 @@
 > （5）如果一个操作值为 **NaN** ，则相等比较返回 **false**（ **NaN** 本身也不等于**NaN**）。<br>
 > （6）如果两个操作值都是对象，则比较它们是不是指向同一个对象。如果两个操作都指向同一个对象，则相等操作符返回 **true**，否则，返回 **false**。
 
-详细资料可以参考：
 [《JavaScript 字符串间的比较》](https://www.jeffjade.com/2015/08/28/2015-09-02-js-string-compare/)
 
 #### 如何将字符串转化为数字，例如 '12.3b'?
@@ -259,7 +256,7 @@
 > （3）使用 parseFloat() 方法，该函数解析一个字符串参数并返回一个浮点数。<br>
 > （4）使用 + 操作符的隐式转换。
 
-详细资料可以参考：
+
 [《详解 JS 中 Number()、parseInt() 和 parseFloat() 的区别》](https://blog.csdn.net/m0_38099607/article/details/72638678)
 
 #### 如何将浮点数点左边的数每三位添加一个逗号，如 12000000.11 转化为『12,000,000.11』?
@@ -271,3 +268,180 @@ function format(number) {
 // 或者用number中的toLocaleString函数
 number.toLocaleString()
 ```
+
+#### 常用正则表达式
+```js
+// （1）匹配 16 进制颜色值
+var regex = /#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})/g;
+
+// （2）匹配日期，如 yyyy-mm-dd 格式
+var regex = /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+
+// （3）匹配 qq 号
+var regex = /^[1-9][0-9]{4,10}$/g;
+
+// （4）手机号码正则
+var regex = /^1[34578]\d{9}$/g;
+
+// （5）用户名正则
+var regex = /^[a-zA-Z\$][a-zA-Z0-9_\$]{4,16}$/;
+```
+
+
+[《前端表单验证常用的 15 个 JS 正则表达式》](http://caibaojian.com/form-regexp.html)
+
+[《JS 常用正则汇总》](https://www.jianshu.com/p/1cb5229325a7)
+
+#### 生成随机数的各种方法？
+[《JS - 生成随机数的方法汇总（不同范围、类型的随机数）》](http://www.hangge.com/blog/cache/detail_1872.html)
+
+#### 如何实现数组的随机排序？
+```js
+// （1）使用数组 sort 方法对数组元素随机排序，让 Math.random() 出来的数与 0.5 比较，如果大于就返回 1 交换位置，如果小于就返回 -1，不交换位置。
+
+function randomSort(a, b) {
+  return Math.random() > 0.5 ? -1 : 1;
+}
+
+//  缺点：每个元素被派到新数组的位置不是随机的，原因是 sort() 方法是依次比较的。
+
+// （2）随机从原数组抽取一个元素，加入到新数组
+
+function randomSort(arr) {
+  var result = [];
+
+  while (arr.length > 0) {
+    var randomIndex = Math.floor(Math.random() * arr.length);
+    result.push(arr[randomIndex]);
+    arr.splice(randomIndex, 1);
+  }
+
+  return result;
+}
+
+// （3）随机交换数组内的元素（洗牌算法类似）
+
+function randomSort(arr) {
+  var index,
+    randomIndex,
+    temp,
+    len = arr.length;
+
+  for (index = 0; index < len; index++) {
+    randomIndex = Math.floor(Math.random() * (len - index)) + index;
+
+    temp = arr[index];
+    arr[index] = arr[randomIndex];
+    arr[randomIndex] = temp;
+  }
+
+  return arr;
+}
+
+// es6
+function randomSort(array) {
+  let length = array.length;
+
+  if (!Array.isArray(array) || length <= 1) return;
+
+  for (let index = 0; index < length - 1; index++) {
+    let randomIndex = Math.floor(Math.random() * (length - index)) + index;
+
+    [array[index], array[randomIndex]] = [array[randomIndex], array[index]];
+  }
+
+  return array;
+}
+```
+
+
+[《Fisher and Yates 的原始版》](https://gaohaoyang.github.io/2016/10/16/shuffle-algorithm/#top)
+[《javascript 实现数组随机排序?》](https://www.zhihu.com/question/32303195)
+[《JavaScript 学习笔记：数组随机排序》](https://www.w3cplus.com/javascript/how-to-randomize-shuffle-a-javascript-array.html)
+
+#### javascript 创建对象的几种方式？
+> 我们一般使用字面量的形式直接创建对象，但是这种创建方式对于创建大量相似对象的时候，会产生大量的重复代码。但 js和一般的面向对象的语言不同，在 ES6 之前它没有类的概念。但是我们可以使用函数来进行模拟，从而产生出可复用的对象<br>
+> 创建方式，我了解到的方式有这么几种：<br>
+> （1）第一种是工厂模式，工厂模式的主要工作原理是用函数来封装创建对象的细节，从而通过调用函数来达到复用的目的。但是它有一个很大的问题就是创建出来的对象无法和某个类型联系起来，它只是简单的封装了复用代码，而没有建立起对象和类型间的关系。<br>
+> （2）第二种是构造函数模式。js 中每一个函数都可以作为构造函数，只要一个函数是通过 new 来调用的，那么我们就可以把它称为构造函数。执行构造函数首先会创建一个对象，然后将对象的原型指向构造函数的 prototype 属性，然后将执行上下文中的 this 指向这个对象，最后再执行整个函数，如果返回值不是对象，则返回新建的对象。因为 this 的值指向了新建的对象，因此我们可以使用 this 给对象赋值。构造函数模式相对于工厂模式的优点是，所创建的对象和构造函数建立起了联系，因此我们可以通过原型来识别对象的类型。但是构造函数存在一个缺点就是，造成了不必要的函数对象的创建，因为在 js 中函数也是一个对象，因此如果对象属性中如果包含函数的话，那么每次我们都会新建一个函数对象，浪费了不必要的内存空间，因为函数是所有的实例都可以通用的。<br>
+> （3）第三种模式是原型模式，因为每一个函数都有一个 prototype 属性，这个属性是一个对象，它包含了通过构造函数创建的所有实例都能共享的属性和方法。因此我们可以使用原型对象来添加公用属性和方法，从而实现代码的复用。这种方式相对于构造函数模式来说，解决了函数对象的复用问题。但是这种模式也存在一些问题，一个是没有办法通过传入参数来初始化值，另一个是如果存在一个引用类型如 Array 这样的值，那么所有的实例将共享一个对象，一个实例对引用类型值的改变会影响所有的实例。<br>
+> （4）第四种模式是组合使用构造函数模式和原型模式，这是创建自定义类型的最常见方式。因为构造函数模式和原型模式分开使用都存在一些问题，因此我们可以组合使用这两种模式，通过构造函数来初始化对象的属性，通过原型对象来实现函数方法的复用。这种方法很好的解决了两种模式单独使用时的缺点，但是有一点不足的就是，因为使用了两种不同的模式，所以对于代码的封装性不够好。<br>
+> （5）第五种模式是动态原型模式，这一种模式将原型方法赋值的创建过程移动到了构造函数的内部，通过对属性是否存在的判断，可以实现仅在第一次调用函数时对原型对象赋值一次的效果。这一种方式很好地对上面的混合模式进行了封装。<br>
+> （6）第六种模式是寄生构造函数模式，这一种模式和工厂模式的实现基本相同，我对这个模式的理解是，它主要是基于一个已有的类型，在实例化时对实例化的对象进行扩展。这样既不用修改原来的构造函数，也达到了扩展对象的目的。它的一个缺点和工厂模式一样，无法实现对象的识别。<br>
+
+[《JavaScript 深入理解之对象创建》](http://cavszhouyou.top/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA.html)
+
+#### JavaScript 继承的几种实现方式
+> 我了解的 js 中实现继承的几种方式有：<br>
+> （1）第一种是以原型链的方式来实现继承，但是这种实现方式存在的缺点是，在包含有引用类型的数据时，会被所有的实例对象所共享，容易造成修改的混乱。还有就是在创建子类型的时候不能向超类型传递参数。<br>
+> （2）第二种方式是使用借用构造函数的方式，这种方式是通过在子类型的函数中调用超类型的构造函数来实现的，这一种方法解决了不能向超类型传递参数的缺点，但是它存在的一个问题就是无法实现函数方法的复用，并且超类型原型定义的方法子类型也没有办法访问到。<br>
+> （3）第三种方式是组合继承，组合继承是将原型链和借用构造函数组合起来使用的一种方式。通过借用构造函数的方式来实现类型的属性的继承，通过将子类型的原型设置为超类型的实例来实现方法的继承。这种方式解决了上面的两种模式单独使用时的问题，但是由于我们是以超类型的实例来作为子类型的原型，所以调用了两次超类的构造函数，造成了子类型的原型中多了很多不必要的属性。<br>
+> （4）第四种方式是原型式继承，原型式继承的主要思路就是基于已有的对象来创建新的对象，实现的原理是，向函数中传入一个对象，然后返回一个以这个对象为原型的对象。这种继承的思路主要不是为了实现创造一种新的类型，只是对某个对象实现一种简单继承，ES5 中定义的 Object.create() 方法就是原型式继承的实现。缺点与原型链方式相同。<br>
+> （5）第五种方式是寄生式继承，寄生式继承的思路是创建一个用于封装继承过程的函数，通过传入一个对象，然后复制一个对象的副本，然后对象进行扩展，最后返回这个对象。这个扩展的过程就可以理解是一种继承。这种继承的优点就是对一个简单对象实现继承，如果这个对象不是我们的自定义类型时。缺点是没有办法实现函数的复用。<br>
+> （6）第六种方式是寄生式组合继承，组合继承的缺点就是使用超类型的实例做为子类型的原型，导致添加了不必要的原型属性。寄生式组合继承的方式是使用超类型的原型的副本来作为子类型的原型，这样就避免了创建不必要的属性。<br>
+
+[《JavaScript 深入理解之继承》](http://cavszhouyou.top/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E7%BB%A7%E6%89%BF.html)
+
+#### 寄生式组合继承的实现？
+```js
+function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.sayName = function() {
+  console.log("My name is " + this.name + ".");
+};
+
+function Student(name, grade) {
+  Person.call(this, name);
+  this.grade = grade;
+}
+
+Student.prototype = Object.create(Person.prototype);
+Student.prototype.constructor = Student;
+
+Student.prototype.sayMyGrade = function() {
+  console.log("My grade is " + this.grade + ".");
+};
+```
+
+#### Javascript 的作用域链？
+> 作用域链的作用是保证对执行环境有权访问的所有变量和函数的有序访问，通过作用域链，我们可以访问到外层环境的变量和函数。<br>
+> 作用域链的本质上是一个指向变量对象的指针列表。变量对象是一个包含了执行环境中所有变量和函数的对象。作用域链的前端始终都是当前执行上下文的变量对象。全局执行上下文的变量对象（也就是全局对象）始终是作用域链的最后一个对象。<br>
+> 当我们查找一个变量时，如果当前执行环境中没有找到，我们可以沿着作用域链向后查找。<br>
+> 作用域链的创建过程跟执行上下文的建立有关....
+
+
+
+[《JavaScript 深入理解之作用域链》](http://cavszhouyou.top/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE.html)
+
+#### 谈谈 This 对象的理解
+> this 是执行上下文中的一个属性，它指向最后一次调用这个方法的对象。在实际开发中，this 的指向可以通过四种调用模式来判断。<br>
+> - 第一种是函数调用模式，当一个函数不是一个对象的属性时，直接作为函数来调用时，this 指向全局对象。
+> - 第二种是方法调用模式，如果一个函数作为一个对象的方法来调用时，this 指向这个对象。
+> - 第三种是构造器调用模式，如果一个函数用 new 调用时，函数执行前会新创建一个对象，this 指向这个新创建的对象。
+> - 第四种是 apply 、 call 和 bind 调用模式，这三个方法都可以显示的指定调用函数的 this 指向。其中 apply 方法接收两个参数：一个是 this 绑定的对象，一个是参数数组。call 方法接收的参数，第一个是 this 绑定的对象，后面的其余参数是传入函数执行的参数。也就是说，在使用 call() 方法时，传递给函数的参数必须逐个列举出来。bind 方法通过传入一个对象，返回一个 this 绑定了传入对象的新函数。这个函数的 this 指向除了使用 new 时会被改变，其他情况下都不会改变。
+> 
+> 这四种方式，使用构造器调用模式的优先级最高，然后是 apply 、 call 和 bind 调用模式，然后是方法调用模式，然后是函数调用模式。
+
+[《JavaScript 深入理解之 this 详解》](http://cavszhouyou.top/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8Bthis%E8%AF%A6%E8%A7%A3.html)
+
+#### eval 是做什么的？
+> 它的功能是把对应的字符串解析成 JS 代码并运行。<br>
+> 应该避免使用 eval，不安全，非常耗性能（2次，一次解析成 js 语句，一次执行）。
+
+
+[《eval()》](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/eval)
+
+#### 什么是 DOM 和 BOM？
+> DOM 指的是文档对象模型，它指的是把文档当做一个对象来对待，这个对象主要定义了处理网页内容的方法和接口。<br>
+> BOM 指的是浏览器对象模型，它指的是把浏览器当做一个对象来对待，这个对象主要定义了与浏览器进行交互的法和接口。BOM的核心是 window，而 window 对象具有双重角色，它既是通过 js 访问浏览器窗口的一个接口，又是一个 Global（全局）对象。这意味着在网页中定义的任何对象，变量和函数，都作为全局对象的一个属性或者方法存在。window 对象含有 location 对象、navigator 对象、screen 对象等子对象，并且 DOM 的最根本的对象 document 对象也是 BOM 的 window 对象的子对象。
+
+
+[《DOM, DOCUMENT, BOM, WINDOW 有什么区别?》](https://www.zhihu.com/question/33453164)
+
+[《Window 对象》](http://www.w3school.com.cn/jsref/dom_obj_window.asp)
+
+[《DOM 与 BOM 分别是什么，有何关联？》](https://www.zhihu.com/question/20724662)
+
+[《JavaScript 学习总结（三）BOM 和 DOM 详解》](https://segmentfault.com/a/1190000000654274#articleHeader21)
