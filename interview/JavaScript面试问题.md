@@ -87,7 +87,7 @@
 > js 中的内置对象主要指的是在程序执行前存在全局作用域里的由 js 定义的一些全局值属性、函数和用来实例化其他对象的构造函数对象。一般我们经常用到的如全局变量值 `NaN、undefined`，全局函数如 `parseInt()、parseFloat()` 用来实例化对象的构造函数如 `Date、Object` 等，还有提供数学计算的单体内置对象如 `Math` 对象。
 
 
-[《标准内置对象的分类》](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects)
+[《标准内置对象的分类》](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects)<br>
 [《JS 所有内置对象属性和方法汇总》](https://segmentfault.com/a/1190000011467723#articleHeader24)
 
 #### undefined 与 undeclared 的区别？
@@ -288,8 +288,7 @@ var regex = /^[a-zA-Z\$][a-zA-Z0-9_\$]{4,16}$/;
 ```
 
 
-[《前端表单验证常用的 15 个 JS 正则表达式》](http://caibaojian.com/form-regexp.html)
-
+[《前端表单验证常用的 15 个 JS 正则表达式》](http://caibaojian.com/form-regexp.html)<br>
 [《JS 常用正则汇总》](https://www.jianshu.com/p/1cb5229325a7)
 
 #### 生成随机数的各种方法？
@@ -353,8 +352,8 @@ function randomSort(array) {
   return array;
 }
 ```
-[《Fisher and Yates 的原始版》](https://gaohaoyang.github.io/2016/10/16/shuffle-algorithm/#top)
-[《javascript 实现数组随机排序?》](https://www.zhihu.com/question/32303195)
+[《Fisher and Yates 的原始版》](https://gaohaoyang.github.io/2016/10/16/shuffle-algorithm/#top)<br>
+[《javascript 实现数组随机排序?》](https://www.zhihu.com/question/32303195)<br>
 [《JavaScript 学习笔记：数组随机排序》](https://www.w3cplus.com/javascript/how-to-randomize-shuffle-a-javascript-array.html)
 
 #### javascript 创建对象的几种方式？
@@ -432,9 +431,9 @@ Student.prototype.sayMyGrade = function() {
 > **DOM** 指的是文档对象模型，它指的是把文档当做一个对象来对待，这个对象主要定义了处理网页内容的方法和接口。<br>
 > **BOM** 指的是浏览器对象模型，它指的是把浏览器当做一个对象来对待，这个对象主要定义了与浏览器进行交互的法和接口。**BOM**的核心是 **window**，而 **window** 对象具有双重角色，它既是通过 js 访问浏览器窗口的一个接口，又是一个 Global（全局）对象。这意味着在网页中定义的任何对象，变量和函数，都作为全局对象的一个属性或者方法存在。**window** 对象含有 location 对象、navigator 对象、screen 对象等子对象，并且 **DOM** 的最根本的对象 document 对象也是 **BOM** 的 **window** 对象的子对象。
 
-[《DOM, DOCUMENT, BOM, WINDOW 有什么区别?》](https://www.zhihu.com/question/33453164)
-[《Window 对象》](http://www.w3school.com.cn/jsref/dom_obj_window.asp)
-[《DOM 与 BOM 分别是什么，有何关联？》](https://www.zhihu.com/question/20724662)
+[《DOM, DOCUMENT, BOM, WINDOW 有什么区别?》](https://www.zhihu.com/question/33453164)<br>
+[《Window 对象》](http://www.w3school.com.cn/jsref/dom_obj_window.asp)<br>
+[《DOM 与 BOM 分别是什么，有何关联？》](https://www.zhihu.com/question/20724662)<br>
 [《JavaScript 学习总结（三）BOM 和 DOM 详解》](https://segmentfault.com/a/1190000000654274#articleHeader21)
 
 #### 写一个通用的事件侦听器函数
@@ -499,7 +498,7 @@ const EventUtils = {
 > 2.事件处理机制：IE 支持事件冒泡、Firefox 同时支持两种事件模型，也就是：事件冒泡和事件捕获。
 > 3.`event.stopPropagation()` 或者 ie 下的方法 `event.cancelBubble = true`;
 
-[《Javascript 事件模型系列（一）事件及事件的三种模型》](https://www.cnblogs.com/lvdabao/p/3265870.html)
+[《Javascript 事件模型系列（一）事件及事件的三种模型》](https://www.cnblogs.com/lvdabao/p/3265870.html)<br>
 [《Javascript 事件模型：事件捕获和事件冒泡》](https://blog.csdn.net/wuseyukui/article/details/13771493)
 
 #### 三种事件模型是什么？
