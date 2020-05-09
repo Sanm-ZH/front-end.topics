@@ -788,9 +788,9 @@ function getJSON(url) {
 > 强缓存策略和协商缓存策略在缓存命中时都会直接使用本地的缓存副本，区别只在于协商缓存会向服务器发送一次请求。它们缓存不命中时，都会向服务器发送请求来获取资源。在实际的缓存机制中，强缓存策略和协商缓存策略是一起合作使用的。浏览器首先会根据请求的信息判断，强缓存是否命中，如果命中则直接使用资源。如果不命中则根据头信息向服务器发起请求，使用协商缓存，如果协商缓存命中的话，则服务器不返回资源，浏览器直接使用本地资源的副本，如果协商缓存不命中，则浏览器返回最新的资源给浏览器。
 
 详细资料可以参考：
-[《浅谈浏览器缓存》](https://segmentfault.com/a/1190000012573337)
-[《前端优化：浏览器缓存技术介绍》](https://juejin.im/post/5b9346dcf265da0aac6fbe57#heading-3)
-[《请求头中的 Cache-Control》](https://www.web-tinker.com/article/21221.html)
+[《浅谈浏览器缓存》](https://segmentfault.com/a/1190000012573337)<br>
+[《前端优化：浏览器缓存技术介绍》](https://juejin.im/post/5b9346dcf265da0aac6fbe57#heading-3)<br>
+[《请求头中的 Cache-Control》](https://www.web-tinker.com/article/21221.html)<br>
 [《Cache-Control 字段值详解》](https://juejin.im/post/5c2d6c9ae51d450cf4195a08)
 
 #### Ajax 解决浏览器缓存问题？
@@ -802,5 +802,5 @@ function getJSON(url) {
 
 
 详细资料可以参考：
-[《Ajax 中浏览器的缓存问题解决方法》](https://www.cnblogs.com/cwzqianduan/p/8632009.html)
+[《Ajax 中浏览器的缓存问题解决方法》](https://www.cnblogs.com/cwzqianduan/p/8632009.html)<br>
 [《浅谈浏览器缓存》](https://segmentfault.com/a/1190000012573337)
