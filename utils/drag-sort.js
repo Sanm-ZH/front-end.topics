@@ -9,8 +9,8 @@
 
         var opts = $.extend({}, $.fn.dragsort.defaults, options);
         var lists = [];
-        var list = null,
-            lastPos = null;
+        var list = null;
+        (firstPos = null), (lastPos = null);
 
         this.each(function (i, cont) {
             // if list container is table, the browser automatically wraps rows in tbody if not specified so change list container to tbody so that children returns rows as user expected
@@ -220,6 +220,8 @@
                         l.createDropTargets();
                         l.buildPositionTable();
                     });
+
+                    firstPos = { top: e.pageY, left: e.pageX };
                     list.setPos(e.pageX, e.pageY);
                     $(document).bind('mousemove touchmove', list.swapItems);
                     $(document).bind('mouseup touchend', list.dropItem);
@@ -337,7 +339,8 @@
                             }
                         } else {
                             // 正常拖动回调
-                            opts.callbackFn('end', list.draggedItem);
+                            opts.callbackFn(firstPos.top > lastPos.top, list.draggedItem);
+                            firstPos = {};
                         }
                     list.draggedItem.removeAttr('data-origpos');
                     list.draggedItem = null;
